@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:stable-alpine3.17
+    volumes:
+      - ./templates:/etc/nginx/templates
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    networks:
+      - mynetwork
+  go:
+    container_name: go
+    build:
+      context: ./go
+      dockerfile: Dockerfile
+    # ports:
+    #   - "3333:3333"
+    #   - "4444:4444"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
