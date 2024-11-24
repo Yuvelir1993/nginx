@@ -1,22 +1,25 @@
 ---
-- name: Start EC2 instances and install Nginx
+- name: Provision EC2 with bare-minimum packages and install Nginx
   hosts: all
   gather_facts: false
-  connection: local
-  vars:
-    instance_ids:
-      - "i-093deb9cfc24be69c"
+  connection: ssh
+  become: yes
   tasks:
-    - name: Start the instances
-      amazon.aws.ec2_instance:
-        instance_ids: "{{ instance_ids }}"
-        state: running
-        wait: True
+    - name: Populate Apt's Cache with package definitions to avoid "no such package" errors
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: install pip
+      ansible.builtin.apt:
+        name: python3-pip
+
+    - name: Ensure botocore and boto3 modules are installed
+      ansible.builtin.pip:
+        name: ["boto3", "botocore"]
+        extra_args: "--user"
 
     # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
     - name: Update the repository cache and update package "nginx" to latest version
-      become: yes
       ansible.builtin.apt:
         name: nginx
         state: latest
-        update_cache: yes
