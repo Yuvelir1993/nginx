@@ -14,13 +14,14 @@ Use `--step` flag to execute with prompts.
 Use `--tags <tag>` to execute only tagged.
 Use `-e <variable>` to pass variable value.
 Use `--ask-become-pass` to explicitly provide sudo password when `become: true`.
+
 Copy private key to Linux filesystem to be able adequately manage permissions with `cp ../.keys/ec2 ~/.ssh/ec2`.
-Check hosts with `ANSIBLE_CONFIG=./ansible.cfg ansible -i ./inventory/all_ec2.aws_ec2.yml -m ping all -vvv`.
-Ping with `ANSIBLE_CONFIG=ansible.cfg ansible -i ./inventory/inventory.ini webservers -m ping`
+Check hosts with `ANSIBLE_CONFIG=ansible.cfg ansible -i ./inventory/all_ec2.aws_ec2.yml all -m ping`. Also can use simple `ANSIBLE_CONFIG=ansible.cfg ansible all -m ping` since inventory is set by default in `ansible.cfg`.
 
 ## List inventories
 Will call AWS API to return available hosts.
 `ANSIBLE_CONFIG=ansible.cfg ansible-inventory -i ./inventory/all_ec2.aws_ec2.yml --list`
+`ANSIBLE_CONFIG=ansible.cfg ansible-inventory -i ./inventory/all_ec2.aws_ec2.yml --graph`
 
 ## Play playbook
 Do not use `sudo` since `become: true` automatically elevates needed permissions.
