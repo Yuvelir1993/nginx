@@ -1,0 +1,22 @@
+---
+- name: Start EC2 instances and install Nginx
+  hosts: all
+  gather_facts: false
+  connection: local
+  vars:
+    instance_ids:
+      - "i-093deb9cfc24be69c"
+  tasks:
+    - name: Start the instances
+      amazon.aws.ec2_instance:
+        instance_ids: "{{ instance_ids }}"
+        state: running
+        wait: True
+
+    # https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
+    - name: Update the repository cache and update package "nginx" to latest version
+      become: yes
+      ansible.builtin.apt:
+        name: nginx
+        state: latest
+        update_cache: yes
