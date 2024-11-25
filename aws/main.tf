@@ -19,7 +19,7 @@ provider "aws" {
 variable "ssh_public_key_file" {
   description = "Path to the SSH public key file"
   type        = string
-  default     = ".keys/ec2.pub"
+  default     = "~/.ssh/ec2.pub"
 }
 
 data "local_file" "ssh_public_key_file_input" {
