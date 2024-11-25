@@ -51,29 +51,36 @@ resource "aws_security_group" "nginx_security_group" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "Allow HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow all incoming ICMP IPv4 traffic"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  # ingress {
-  #   description = "Allow HTTP"
-  #   from_port   = 80
-  #   to_port     = 80
-  #   protocol    = "tcp"
-  #   cidr_blocks = ["0.0.0.0/32"]
-  # }
-
-  # ingress {
-  #   description = "Allow HTTPS"
-  #   from_port   = 443
-  #   to_port     = 443
-  #   protocol    = "tcp"
-  #   # cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
-  #   cidr_blocks = ["0.0.0.0/32"]
-  # }
 }
 
 // https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html
