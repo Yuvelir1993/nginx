@@ -1,0 +1,45 @@
+---
+- name: Configure Nginx for static website hosting
+  hosts: all
+  become: yes
+  vars:
+    user: "ubuntu"
+
+  tasks:
+    - name: Get stats of the Nginx sites-enabled object
+      ansible.builtin.stat:
+        path: /etc/nginx/sites-enabled/default
+      register: sites_enabled_stats
+
+    - name: Remove default Nginx configuration
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      when: sites_enabled_stats.stat.islnk is defined and sites_enabled_stats.stat.islnk | default(false)
+
+    - name: Add Nginx configuration
+      ansible.builtin.copy:
+        src: ../files/binaryville.conf
+        dest: /etc/nginx/conf.d/binaryville.conf
+        owner: "{{ user }}"
+        group: root
+        mode: "0644"
+
+    - name: Check Nginx configuration for syntax errors
+      ansible.builtin.command:
+        cmd: nginx -t
+      register: nginx_test
+      ignore_errors: true
+
+    - name: Log Nginx syntax test output if errors are found
+      ansible.builtin.debug:
+        msg: |
+          Nginx configuration test with `nginx -t` failed:
+          {{ nginx_test.stderr }}
+      when: nginx_test.rc != 0
+
+    - name: Reload Nginx service to ensure new configurations are applied
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+      when: nginx_test.rc == 0

@@ -19,9 +19,11 @@ Check hosts with `ANSIBLE_CONFIG=ansible.cfg ansible -i ./inventory/all_ec2.aws_
 
 ## List inventories
 Will call AWS API to return available hosts.
-`ANSIBLE_CONFIG=ansible.cfg ansible-inventory -i ./inventory/all_ec2.aws_ec2.yml --list`
-`ANSIBLE_CONFIG=ansible.cfg ansible-inventory -i ./inventory/all_ec2.aws_ec2.yml --graph`
+`ANSIBLE_CONFIG=ansible.cfg ansible-inventory --list`
+`ANSIBLE_CONFIG=ansible.cfg ansible-inventory --graph`
 
-## Play playbook
+## Play playbooks
 Do not use `sudo` since `become: true` automatically elevates needed permissions.
-`ANSIBLE_CONFIG=ansible.cfg ansible-playbook -i ./inventory/all_ec2.aws_ec2.yml ./playbooks/prepare_instance.yml`
+1. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/prepare_instance.yml`
+2. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/configure_nginx.yml`
+3. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/deploy_website.yml`

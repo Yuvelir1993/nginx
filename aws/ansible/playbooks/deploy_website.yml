@@ -1,0 +1,22 @@
+---
+- name: Deploying Nginx website
+  hosts: all
+  become: yes
+  vars:
+    user: "ubuntu"
+
+  tasks:
+    - ping: ~
+
+    - name: Create directory with parent directories
+      ansible.builtin.file:
+        path: /var/www/binaryville
+        state: directory
+
+    - name: Copy index.html
+      ansible.builtin.copy:
+        src: ../files/index.html
+        dest: /var/www/binaryville/index.html
+        owner: "{{ user }}"
+        group: root
+        mode: "0644"
