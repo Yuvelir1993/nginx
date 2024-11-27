@@ -10,13 +10,13 @@
 
     - name: Create directory with parent directories
       ansible.builtin.file:
-        path: /var/www/binaryville
+        path: /var/www/s3
         state: directory
 
     - name: Copy index.html
       ansible.builtin.copy:
         src: ../files/index.html
-        dest: /var/www/binaryville/index.html
+        dest: /var/www/s3/index.html
         owner: "{{ user }}"
         group: root
         mode: "0644"

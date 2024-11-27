@@ -19,8 +19,8 @@
 
     - name: Add Nginx configuration
       ansible.builtin.copy:
-        src: ../files/binaryville.conf
-        dest: /etc/nginx/conf.d/binaryville.conf
+        src: ../files/s3.conf
+        dest: /etc/nginx/conf.d/s3.conf
         owner: "{{ user }}"
         group: root
         mode: "0644"
