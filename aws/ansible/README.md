@@ -24,4 +24,4 @@ Will call AWS API to return available hosts.
 
 ## Play playbook
 Do not use `sudo` since `become: true` automatically elevates needed permissions.
-`ANSIBLE_CONFIG=ansible.cfg ansible-playbook -i ./inventory/all_ec2.aws_ec2.yml ./playbooks/set_up_nginx_on_ec2.yml`
+`ANSIBLE_CONFIG=ansible.cfg ansible-playbook -i ./inventory/all_ec2.aws_ec2.yml ./playbooks/prepare_instance.yml`
