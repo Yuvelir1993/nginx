@@ -15,7 +15,7 @@ Use `--tags <tag>` to execute only tagged.
 Use `-e <variable>` to pass variable value.
 Use `--ask-become-pass` to explicitly provide sudo password when `become: true`.
 
-Check hosts with `ANSIBLE_CONFIG=ansible.cfg ansible -i ./inventory/all_ec2.aws_ec2.yml all -m ping`. Also can use simple `ANSIBLE_CONFIG=ansible.cfg ansible all -m ping` since inventory is set by default in `ansible.cfg`.
+Ping hosts with `ANSIBLE_CONFIG=ansible.cfg ansible all -m ping`
 
 ## List inventories
 Will call AWS API to return available hosts.
@@ -26,3 +26,17 @@ Will call AWS API to return available hosts.
 Do not use `sudo` since `become: true` automatically elevates needed permissions.
 1. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/prepare_instance.yml`
 2. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/configure_nginx.yml`
+3. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/deploy_website.yml`
+
+# Troubleshooting
+
+## UNREACHABLE
+
+In case of error like below log in with `sudo su`:
+```bash
+ec2-3-71-181-6.eu-central-1.compute.amazonaws.com | UNREACHABLE! => {
+    "changed": false,
+    "msg": "Failed to connect to the host via ssh: ubuntu@ec2-3-71-181-6.eu-central-1.compute.amazonaws.com: Permission denied (publickey).",
+    "unreachable": true
+}
+```
