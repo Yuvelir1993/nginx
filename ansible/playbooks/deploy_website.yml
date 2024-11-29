@@ -15,7 +15,7 @@
 
     - name: Copy index.html
       ansible.builtin.copy:
-        src: ../files/index.html
+        src: ../../app/index.html
         dest: /var/www/s3/index.html
         owner: "{{ user }}"
         group: root
