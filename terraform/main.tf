@@ -68,6 +68,14 @@ resource "aws_security_group" "nginx_security_group" {
   }
 
   ingress {
+    description = "Allow Node.js server listening on port 3000"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "Allow all incoming ICMP IPv4 traffic"
     from_port   = -1
     to_port     = -1

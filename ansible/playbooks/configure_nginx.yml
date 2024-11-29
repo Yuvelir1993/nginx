@@ -19,8 +19,8 @@
 
     - name: Add Nginx configuration
       ansible.builtin.copy:
-        src: ../../app/s3.conf
-        dest: /etc/nginx/conf.d/s3.conf
+        src: ../../app/myserver.conf
+        dest: /etc/nginx/conf.d/myserver.conf
         owner: "{{ user }}"
         group: root
         mode: "0644"

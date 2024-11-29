@@ -24,9 +24,10 @@ Will call AWS API to return available hosts.
 
 ## Play playbooks
 Do not use `sudo` since `become: true` automatically elevates needed permissions.
+⚠️ But probably you need to use `sudo su` before, depends on how you generated the key!
 1. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/prepare_instance.yml`
 2. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/configure_nginx.yml`
-3. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/deploy_website.yml`
+3. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/deploy_website.yml` (access 'Public DNS' of elastic IP to test endpoints)
 
 # Troubleshooting
 

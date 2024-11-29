@@ -1,0 +1,1 @@
+Based on [How to use Nginx as a reverse proxy for a Node.js server](https://blog.logrocket.com/how-to-run-node-js-server-nginx/)
