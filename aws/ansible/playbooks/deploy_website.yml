@@ -6,17 +6,15 @@
     user: "ubuntu"
 
   tasks:
-    - ping: ~
-
     - name: Create directory with parent directories
       ansible.builtin.file:
         path: /var/www/s3
         state: directory
 
-    - name: Copy index.html
+    - name: Copy all files from the local directory
       ansible.builtin.copy:
-        src: ../files/index.html
-        dest: /var/www/s3/index.html
+        src: ../files/
+        dest: /var/www/s3/
         owner: "{{ user }}"
         group: root
         mode: "0644"
