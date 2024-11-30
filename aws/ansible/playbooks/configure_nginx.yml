@@ -4,6 +4,17 @@
   become: yes
   vars:
     user: "ubuntu"
+    custom_hosts:
+      - {
+          ip: "192.168.1.10",
+          hostname: "s3_proxy.com",
+          aliases: "www.s3_proxy.com",
+        }
+      - {
+          ip: "192.168.1.20",
+          hostname: "example.com",
+          aliases: "www.example.com",
+        }
 
   tasks:
     - name: Get stats of the Nginx sites-enabled object
@@ -37,6 +48,16 @@
           Nginx configuration test with `nginx -t` failed:
           {{ nginx_test.stderr }}
       when: nginx_test.rc != 0
+
+    # anyway not reachable currently
+    - name: Ensure host entries exist in /etc/hosts
+      ansible.builtin.lineinfile:
+        path: /etc/hosts
+        line: "{{ item.ip }} {{ item.hostname }} {{ item.aliases }}"
+        state: present
+        create: yes
+      loop: "{{ custom_hosts }}"
+      notify: Reload Nginx service to ensure new configurations are applied
 
     - name: Reload Nginx service to ensure new configurations are applied
       ansible.builtin.service:
