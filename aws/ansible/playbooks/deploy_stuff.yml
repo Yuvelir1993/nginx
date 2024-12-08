@@ -13,13 +13,15 @@
         path: /var/www/binaryville
         state: directory
 
-    - name: Copy index.html
+    - name: Copy html files
       ansible.builtin.copy:
-        src: ../files/index.html
-        dest: /var/www/binaryville/index.html
+        src: "{{ item }}"
+        dest: /var/www/binaryville
         owner: "{{ user }}"
         group: root
         mode: "0644"
+      with_fileglob:
+        - "../files/*.html"
 
     - name: Copy server.py
       ansible.builtin.copy:
