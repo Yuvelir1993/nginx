@@ -1,5 +1,5 @@
 ---
-- name: Deploying Nginx website
+- name: Deploying website and server
   hosts: all
   become: yes
   vars:
@@ -20,3 +20,15 @@
         owner: "{{ user }}"
         group: root
         mode: "0644"
+
+    - name: Copy server.py
+      ansible.builtin.copy:
+        src: ../files/server.py
+        dest: /var/www/binaryville/server.py
+        owner: "{{ user }}"
+        group: root
+        mode: "0644"
+
+    - name: Start server
+      ansible.builtin.shell: |
+        nohup python3 /var/www/binaryville/server.py
