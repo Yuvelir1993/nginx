@@ -26,8 +26,7 @@
         mode: "0644"
 
     - name: Check Nginx configuration for syntax errors
-      ansible.builtin.command:
-        cmd: nginx -t
+      ansible.builtin.shell: nginx -t
       register: nginx_test
       ignore_errors: true
 
@@ -38,8 +37,11 @@
           {{ nginx_test.stderr }}
       when: nginx_test.rc != 0
 
+    - name: Set up password
+      ansible.builtin.shell: htpasswd -b -c /etc/nginx/passwords admin admin
+
     - name: Reload Nginx service to ensure new configurations are applied
       ansible.builtin.service:
         name: nginx
-        state: reloaded
+        state: restarted
       when: nginx_test.rc == 0

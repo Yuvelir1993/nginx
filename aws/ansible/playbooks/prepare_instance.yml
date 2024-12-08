@@ -25,6 +25,11 @@
         name: nginx
         state: latest
 
+    - name: Install additional packages
+      ansible.builtin.apt:
+        name: apache2-utils
+        state: latest
+
     - name: Start Nginx
       service:
         name: nginx
