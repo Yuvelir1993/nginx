@@ -27,3 +27,11 @@ Do not use `sudo` since `become: true` automatically elevates needed permissions
 1. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/prepare_instance.yml`
 2. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/configure_nginx.yml`
 3. `ANSIBLE_CONFIG=ansible.cfg ansible-playbook ./playbooks/deploy_stuff.yml`
+
+## Startup from docker compose 
+```bash
+./generate-secrets.sh
+docker-compose up --build
+
+https://localhost/
+```

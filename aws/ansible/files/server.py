@@ -4,7 +4,7 @@ import os
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-hostName = "localhost"
+hostName = "0.0.0.0"
 
 
 class MyServer(BaseHTTPRequestHandler):
@@ -40,6 +40,7 @@ class MyServer(BaseHTTPRequestHandler):
 
 
 def start_server(port):
+    print("started python server")
     this_server = HTTPServer((hostName, port), MyServer)
     print(time.strftime('%X'), "App server started - http://%s:%s" %
           (hostName, port))
