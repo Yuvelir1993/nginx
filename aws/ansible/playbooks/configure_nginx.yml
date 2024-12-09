@@ -25,6 +25,9 @@
         group: root
         mode: "0644"
 
+    - name: Set up TLS
+      ansible.builtin.script: ../files/create_crt_key.sh
+
     - name: Check Nginx configuration for syntax errors
       ansible.builtin.shell: nginx -t
       register: nginx_test
@@ -40,7 +43,7 @@
     - name: Set up password
       ansible.builtin.shell: htpasswd -b -c /etc/nginx/passwords admin admin
 
-    - name: Reload Nginx service to ensure new configurations are applied
+    - name: Restart Nginx service to ensure new configurations are applied
       ansible.builtin.service:
         name: nginx
         state: restarted

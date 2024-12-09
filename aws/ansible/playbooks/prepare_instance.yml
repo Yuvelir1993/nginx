@@ -27,7 +27,9 @@
 
     - name: Install additional packages
       ansible.builtin.apt:
-        name: apache2-utils
+        name:
+          - apache2-utils
+          - openssl
         state: latest
 
     - name: Start Nginx
